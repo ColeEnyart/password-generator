@@ -13,25 +13,56 @@ var lowerCaseAllowed = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "
     - Need to know are numbers included
     - Need to know are lower case letters included
     - Need to know are upper case letters included
-
     - Build final list of possible characters - certain data type?
     - We need a way to store all the possible characters allowed in the password
     - How can we build our password one letter at a time?
         For each character needed, grab a random element from the allowed list
-
 */
 
 /* choose a length of at least 8 characters and no more than 128 characters */
 function askHowManyCharacters(){
-  var answer = window.prompt("How many characters?");
+  var text = window.prompt("How many characters? (8-128)");
 
-  if(answer >= 8 && answer <= 128 ) {
-    console.log("correct");
-    return answer;
-  } else {
-    console.log("wrong length");
+  if( isNaN(text) || text < 8 || text > 128 ) {
+    alert("Input must be at valid number between 8 and 128");
+    return askHowManyCharacters;
   }
+  console.log(text);
+  return text
 }
+
+
+console.log(Array.prototype);
+
+
+function getRandomValue(arr) {
+  var result = arr[Math.floor(Math.random() * arr.length)];
+  return result;
+}
+
+function getSpecial() {
+  var special = getRandomValue(specialCharsAllowed)
+  return special;
+}
+
+function getNumbers() {
+  var special = getRandomValue(numbersAllowed)
+  return special;
+}
+
+function getUpper() {
+  var special = getRandomValue(upperCaseAllowed)
+  return special;
+}
+
+function getLower() {
+  var special = getRandomValue(lowerCaseAllowed)
+  return special;
+}
+
+
+
+
 
 function generatePassword() {
     var finalPassword = "";
