@@ -2,71 +2,68 @@
 var generateBtn = document.querySelector("#generate");
 
 // global variable
-var numOfCharacters = "";
-var specialCharsAllowed = ["!", "%", "&", ",", "*", "+", "-", ".", "/", "<", ">", "?","~"];
-var numbersAllowed = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-var upperCaseAllowed = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var lowerCaseAllowed = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-/*
-    - Need to know how many characters the password will have
-    - Need to know are special characters included
-    - Need to know are numbers included
-    - Need to know are lower case letters included
-    - Need to know are upper case letters included
-    - Build final list of possible characters - certain data type?
-    - We need a way to store all the possible characters allowed in the password
-    - How can we build our password one letter at a time?
-        For each character needed, grab a random element from the allowed list
-*/
+
 
 /* choose a length of at least 8 characters and no more than 128 characters */
 function askHowManyCharacters(){
-  var text = window.prompt("How many characters? (8-128)");
+  var text = window.prompt ("How many characters do you want in your password? (8-128)"),
+      number = parseInt(text, 10);
 
-  if( isNaN(text) || text < 8 || text > 128 ) {
+  if( isNaN(number) || number < 8 || number > 128 ) {
     alert("Input must be at valid number between 8 and 128");
-    return askHowManyCharacters;
+    return askHowManyCharacters();
   }
-  console.log(text);
-  return text
+  console.log(number);
+  return number;
 }
 
+function askWhichCharacters() {
+  var specialCharsAllowed = window.confirm ("Do you want special characters in your password?"),
+      numbersAllowed = window.confirm ("Do you want numbers in your password?"),
+      lowercaseAllowed = window.confirm ("Do you want lowercase letters in your password?"),
+      uppercaseAllowed = window.confirm ("Do you want uppercase letters in your password?");
+  
+  var special = "",
+      number = "",
+      lower = "",
+      upper = "";
 
-console.log(Array.prototype);
+  if (specialCharsAllowed) {
+    special = "!@#$^&%*()+=-[]{}|:<>?,.";
+    console.log(special);
+  }
+  if (numbersAllowed) {
+    number = "1234567890";
+    console.log(number);
+  }
+  if (lowercaseAllowed) {
+    lower = "abcdefghijklmnopqrstuvwxyz";
+    console.log(lower);
+  }
+  if (uppercaseAllowed) {
+    upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    console.log(upper);
+  }
 
+  if (specialCharsAllowed + numbersAllowed + lowercaseAllowed + uppercaseAllowed === 0) {
+    alert("At least one character type must be selected");
+    return askWhichCharacters();
+  }
 
-function getRandomValue(arr) {
-  var result = arr[Math.floor(Math.random() * arr.length)];
-  return result;
+  criteria = special + number + lower + upper;
+  console.log(criteria.split(""));
+  return criteria;
 }
-
-function getSpecial() {
-  var special = getRandomValue(specialCharsAllowed)
-  return special;
-}
-
-function getNumbers() {
-  var special = getRandomValue(numbersAllowed)
-  return special;
-}
-
-function getUpper() {
-  var special = getRandomValue(upperCaseAllowed)
-  return special;
-}
-
-function getLower() {
-  var special = getRandomValue(lowerCaseAllowed)
-  return special;
-}
-
-
-
-
 
 function generatePassword() {
-    var finalPassword = "";
-    var numberOfCharacters = askHowManyCharacters();
+    var 
+      finalPassword = "",
+      length = askHowManyCharacters(),
+      characters = askWhichCharacters();
+
+    for (var i = 0; i < length; i++) {
+      finalPassword += characters[Math.floor(Math.random() * characters.length)];;
+    }
 
     return finalPassword;
 }
