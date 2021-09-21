@@ -4,7 +4,7 @@ var generateBtn = document.querySelector("#generate");
 // asks user what length the password should be and validates if input is a number
 function askHowManyCharacters() {
   var
-    text = window.prompt("How many characters do you want in your password? (8-128)"),        // ask user for imput
+    text = window.prompt("How many characters do you want in your password? (8-128)"),        // ask user for input
     number = parseInt(text, 10);                                                              // attempt to convert input into a number, radix 10 select (0-9)
 
   if (isNaN(number) || number < 8 || number > 128) {                                          // if not valid input
